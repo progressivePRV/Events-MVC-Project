@@ -1,0 +1,45 @@
+<%- include('../partials/header.ejs') %>
+    <!--
+        main section
+    -->
+    <main>
+        <Section class="new_event">
+            <h2 class="new-event-heading">About the Event</h2>
+            <div class="new-event-input-container">
+                <form method="POSt">
+                    <label  class="event-input-lable">Category</label><br>
+                    <input type="text" name="category" class="event-input" placeholder="Category" required>
+                    <br>
+                    <label  class="event-input-lable">Title</label><br>
+                    <input type="text" name="title" class="event-input" placeholder="Title" required>
+                    <br>
+                    <label  class="event-input-lable">Host Name</label><br>
+                    <input type="text" name="hostName" class="event-input" placeholder="Host Name" required>
+                    <br>
+                    <label  class="event-input-lable">Details</label><br>
+                    <textarea name="details" placeholder="Description" cols="30" rows="6" ></textarea>
+                    <br>
+                    <label  class="event-input-lable">Where</label><br>
+                    <input type="text" name="location" class="event-input" placeholder="Location" required>
+                    <br>
+                    <label  class="event-input-lable">When</label><br>
+                    <input type="date" name="date" class="event-input" required>
+                    <br>
+                    <label  class="event-input-lable">Start</label><br>
+                    <input type="time" name="startTime" class="event-input" required>
+                    <br>
+                    <label  class="event-input-lable">End</label><br>
+                    <input type="time" name="endTime" class="event-input" required>
+                    <br>
+                    <label  class="event-input-lable">Image URL</label><br>
+                    <input type="url" name="image" class="event-input" placeholder="Image URL" required>
+                    <br><br>
+                    <button formaction="/connections">Create New Event</button>
+                </form>
+            </div>
+        </Section>
+    </main>
+    <!--
+        footer section
+    -->
+    <%- include('../partials/footer.ejs') %>

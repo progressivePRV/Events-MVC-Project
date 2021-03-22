@@ -1,0 +1,27 @@
+<%- include('../partials/header.ejs') %>
+    <!--
+        main section
+    -->
+    <main>
+        <%= %>
+        <% if(Object.keys(output).length>0){%>
+            <section class="category">
+                <% for(let key in output){ %>
+                <h2><%= key%></h2>
+                <article class="event-in-category">
+                    <% output[key].forEach(conn =>{ %>
+                        <h3><a class="event-link" href="/connections/<%= conn.id %>"><%= conn.title %></a></h3>
+                    <% });%>
+                </article>
+                <% }%>
+                
+            </section>
+        <%}else{%>
+            <h2>There are no Events to display</h2>
+        <%} %>
+        
+    </main>
+    <!--
+        footer section
+    -->
+    <%- include('../partials/footer.ejs') %>

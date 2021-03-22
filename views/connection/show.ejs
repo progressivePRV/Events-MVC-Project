@@ -1,0 +1,42 @@
+<%- include('../partials/header.ejs') %>
+    <!--
+        main section
+    -->
+    <main>
+        <%= %>
+
+       <section class="event">
+           <div class="event-menu-container">
+               <form>
+                    <button type="submit" formmethod="POST" formaction="/connections/<%= output.id%>?_method=DELETE">Delete</button>
+                    <button type="submit" formmethod="GET" formaction="/connections/<%= output.id%>/edit">Update</button>
+            </form>
+           </div>
+           <h2 class="event-title">
+                <%= output.title%>
+           </h2>
+            <div class="event-info">
+                <div class="event-info-left">
+                    <img class="event-picture" src="<%= output.image%>" alt="event picture">
+                </div>
+                <div class="event-info-right">
+                    <p class="event-info-basics">
+                        Hosted by: <em><%= output.hostName%></em><br>
+                        Category: <em><%= output.category%></em><br>
+                        <%= output.startTime%> to <%= output.endTime%> <br>
+                        on <%= output.date%> <br>
+                        <%= output.location%>
+                    </p>
+                </div>
+                <div class="event-info-bottom">
+                    <p class="event-detail">
+                        <%= output.details%>
+                    </p>
+                </div>
+            </div>
+       </section>
+    </main>
+    <!--
+        footer section
+    -->
+    <%- include('../partials/footer.ejs') %>
