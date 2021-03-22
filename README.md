@@ -1,6 +1,6 @@
 # Events-MVC-Project
 
-This is an Events description web App Named as "Events With us". A user can create, delete and update the Events. It will shoe all the events categorized into categories.
+This is an Events description web App Named as "Events With us". A user can create, delete and update the Events. It will show all the events categorized into categories.
 
 ## Specification
 In this assignment, I have develop a fully functional web app using the MVC pattern, according to the following specifications:
