@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const connectionRoutes = require('./routes/connectionRoutes');
 const mainRoutes = require('./routes/mainRoute');
 const methodOverride = require('method-override');
+const mongoose = require('mongoose');
 
 
 //create app
@@ -13,6 +14,17 @@ const app = express();
 const port = 3000;
 const host = 'localhost';
 app.set('view engine','ejs');
+
+mongoose.connect('mongodb://localhost:27017/MVC_DB',{ useUnifiedTopology: true,useNewUrlParser: true })
+.then(()=>{
+    // if successful
+    //start the server
+    app.listen(port,host,()=>{
+        console.log("check out http://"+host+":"+port);
+    });
+})
+.catch(err => console.log(err));
+
 
 //mount middleware
 app.use(express.static('public'));
@@ -42,7 +54,4 @@ app.use((err, req,res,next)=>{
 });
 
 
-//start the server
-app.listen(port,host,()=>{
-    console.log("check out http://"+host+":"+port);
-});
+

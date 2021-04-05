@@ -4,12 +4,11 @@
     -->
     <main>
         <%= %>
-
        <section class="event">
            <div class="event-menu-container">
                <form>
-                    <button type="submit" formmethod="POST" formaction="/connections/<%= output.id%>?_method=DELETE">Delete</button>
-                    <button type="submit" formmethod="GET" formaction="/connections/<%= output.id%>/edit">Update</button>
+                    <button type="submit" formmethod="POST" formaction="/connections/<%= output._id%>?_method=DELETE">Delete</button>
+                    <button type="submit" formmethod="GET" formaction="/connections/<%= output._id%>/edit">Update</button>
             </form>
            </div>
            <h2 class="event-title">

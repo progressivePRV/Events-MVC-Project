@@ -10,7 +10,7 @@
                 <h2><%= key%></h2>
                 <article class="event-in-category">
                     <% output[key].forEach(conn =>{ %>
-                        <h3><a class="event-link" href="/connections/<%= conn.id %>"><%= conn.title %></a></h3>
+                        <h3><a class="event-link" href="/connections/<%= conn._id %>"><%= conn.title %></a></h3>
                     <% });%>
                 </article>
                 <% }%>

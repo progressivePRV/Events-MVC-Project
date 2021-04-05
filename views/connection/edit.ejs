@@ -17,7 +17,7 @@
                     <input type="text" name="hostName" class="event-input" value="<%= output.hostName%>" required>
                     <br>
                     <label  class="event-input-lable">Details</label><br>
-                    <textarea name="details" cols="30" rows="6" ><%= output.details%></textarea>
+                    <textarea name="details" cols="30" rows="6" required minlength="10"><%= output.details%></textarea>
                     <br>
                     <label  class="event-input-lable">Where</label><br>
                     <input type="text" name="location" class="event-input" value="<%= output.location%>" required>
@@ -34,7 +34,7 @@
                     <label  class="event-input-lable">Image URL</label><br>
                     <input type="url" name="image" class="event-input" placeholder="Image URL" value="<%= output.image%>" required>
                     <br><br>
-                    <button formaction="/connections/<%= output.id%>?_method=PUT">Edit Event</button>
+                    <button formaction="/connections/<%= output._id%>?_method=PUT">Edit Event</button>
                 </form>
             </div>
         </Section>
