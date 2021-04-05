@@ -75,10 +75,12 @@ In this assignment, I have develop a fully functional web app using the MVC patt
 ## Images
 
 ### Home Page
-
+![Home Page](https://github.com/progressivePRV/Events-MVC-Project/blob/main/images/home_page.png)
 ### All Events Page
-
+![All Events Page](https://github.com/progressivePRV/Events-MVC-Project/blob/main/images/All_Events.png)
+### Event Description Page
+![Event Description Page](https://github.com/progressivePRV/Events-MVC-Project/blob/main/images/Events_desc.png)
 ### Start new Event page
-
+![Start new Event page](https://github.com/progressivePRV/Events-MVC-Project/blob/main/images/create_new_event.png)
 ### Edit Event page
-
+![Edit Event page](https://github.com/progressivePRV/Events-MVC-Project/blob/main/images/Edit_evet.png)
