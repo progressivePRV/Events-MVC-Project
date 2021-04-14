@@ -71,7 +71,7 @@ exports.updateById = (req,res,next)=>{
         return next(err);
     }
 
-    model.findByIdAndUpdate({_id:id},req.body,{useFindAndModify:false, runValidators:true})
+    model.findByIdAndUpdate(id,req.body,{useFindAndModify:false, runValidators:true})
     .then(event=>{
         if(event){
             let url = '/connections/'+id
@@ -82,7 +82,12 @@ exports.updateById = (req,res,next)=>{
             next(err);
         }
     })
-    .catch(err => next(err));
+    .catch(err =>{
+        if(err.name === 'ValidationError'){
+            err.status = 400;
+        }
+        next(err);
+    });
 };
 
 //DELETE /connections/:id delete the specific connection
@@ -94,7 +99,7 @@ exports.deleteById = (req,res)=>{
         return next(err);
     }
 
-    model.findByIdAndDelete({_id:id})
+    model.findByIdAndDelete(id)
     .then(event =>{
         if(event){
             res.redirect('/connections');
@@ -117,5 +122,10 @@ exports.createConnection = (req,res,next)=>{
     let event = new model(req.body);
     event.save()
     .then(story=>res.redirect('/connections'))
-    .catch(err => console.log(err));
+    .catch(err =>{
+        if(err.name === 'ValidationError'){
+            err.status = 400;
+        }
+        next(err);
+    });
 };
