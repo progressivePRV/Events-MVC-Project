@@ -91,7 +91,7 @@ exports.updateById = (req,res,next)=>{
 };
 
 //DELETE /connections/:id delete the specific connection
-exports.deleteById = (req,res)=>{
+exports.deleteById = (req,res,next)=>{
     let id = req.params.id;
     if (!id.match(/^[0-9a-fA-F]{24}$/)){
         let err = new Error('Invalid event id '+id);
