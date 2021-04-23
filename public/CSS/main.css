@@ -3,6 +3,7 @@
     padding: 5px;
     /* color: #c7ffd8; */
     color: #f6f6f6;
+    text-transform: capitalize;
 }
 
 /* // a */
@@ -96,10 +97,12 @@ body{
     /* border: 1px solid; */
 }
 .event-picture{
-    width: 200px;
+    max-width: 300px;
+    max-height: 300px;
 }
 .event-info-basics{
     line-height: 25px;
+    text-transform: capitalize;
 }
 
 /* // f */
@@ -182,6 +185,17 @@ main{
     line-height: 25px;
 }
 
+/* // p  .profile-event-table,*/
+td, th {
+    padding: 5px;
+    width: 20vh;
+    text-align: center;
+}
+
+.profile-event-table, .left-colum {
+    text-align: left;
+}
+
 
 /* // s */
 .site-header{
@@ -189,12 +203,78 @@ main{
     position: relative;
 }
 
+#snackbar{
+    display: inline-block;
+    margin: 0;
+    visibility: hidden;
+    position: fixed;
+    left: 50%;
+    top: 10%;
+    padding: 16px; 
+    text-align: center;
+    transform: translate(-50%,-50%);
+    /* height: 4rem; */
+    min-width: 20%;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    /* color: ; */
+    font-size: 1.25rem;
+    text-transform: capitalize; /* or uppercase*/
+}
+.snackbar-message-error{
+    color: #d33;
+    border-color: #d33;
+}
+.snackbar-message-success{
+    color: #98DE8F;
+    border-color: #98DE8F;
+}
+#snackbar.show{
+    visibility: visible;
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+    animation: fadein .05s, fadeout .05s 2.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from{
+        top:0;
+        opacity: 0;
+    }
+    to{
+        top: 10%;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from{
+        top: 10%;
+        opacity: 1;
+    }
+    to{
+        top:0;
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
 
 /* // t */
 textarea{
     resize: none;
 }
-
 
 /* // u */
 .user-specific-nav{

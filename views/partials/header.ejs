@@ -9,11 +9,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/CSS/main.css" type="text/css">
-
+    <script src="/javascript/extra.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+
+
+    <!-- notifications --> 
+    <div id="snackbar">
+        <% if(errorMessages.length>0){
+            errorMessages.forEach(message => { %>
+                <div class="snackbar-message-error"> <%= message %>  </div> 
+                <% });%>
+            <% } %>
+    
+            <%if(successMessages.length>0){ 
+            successMessages.forEach(message => { %>
+                <div class="snackbar-message-success"> <%= message %> </div> 
+                <% });%>
+                <% } %>
+    </div>
+    
+
     <!--
         header section
     -->
@@ -26,9 +44,13 @@
                 <p class="brand-moto">Lets meet, greet and enjoy together</p>
             </div>
             <nav class="user-specific-nav">
-                <a href="/connections/new" class="user-specific-option">Start a new Event</a>
-                <a href="" class="user-specific-option">Login</a>
-                <a href="" class="user-specific-option">Sign-up</a>
+                <% if(userInfo) { %>
+                    <a href="/users/profile" class="user-specific-option">Welcome, <%= userInfo['name'] %></a>
+                    <a href="/users/logout" class="user-specific-option">Log out</a>
+                <% } else { %>
+                    <a href="/users/login" class="user-specific-option">Login</a>
+                    <a href="/users/signup" class="user-specific-option">Sign-up</a>
+                <% } %>
             </nav>
 
         </div>
@@ -36,6 +58,10 @@
             <hr>
             <nav class="general-site-nav">
                 <a href="/connections" class="general-site-option">Events</a>
+                <% if(userInfo) { %>
+                <a href="/connections/new" class="general-site-option">Start a new Event</a>
+                <% } %>
             </nav>
+
         </div>
     </header>

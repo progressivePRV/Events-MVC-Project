@@ -1,0 +1,21 @@
+<%- include('../partials/header.ejs')%>
+
+<main>
+    <Section class="new_event">
+        <h2 class="new-event-heading">Sign Up</h2>
+            <div class="new-event-input-container">
+        <form action="" method="POST">
+            <label class="event-input-lable" for="firstName">First Name</label><br>
+            <input class="event-input" type="text" id="firstName" name="firstName" placeholder="First name" required><br><br>
+            <label class="event-input-lable" for="lastName">Last Name</label><br>
+            <input class="event-input" type="text" id="lastName" name="lastName" placeholder="last name" required><br><br>
+            <label class="event-input-lable" for="email">Email</label><br>
+            <input class="event-input" type="email" id="email" name="email" placeholder="Email" required><br><br>
+            <label class="event-input-lable" for="password">Password</label><br>
+            <input class="event-input" type="password" id="password" name="password" placeholder="Password" minlength="8" required><br><br>
+            <button formaction="/users">Sign Up</button>
+            <br>
+    </Section>
+</main>
+
+    <%- include('../partials/footer.ejs')%>

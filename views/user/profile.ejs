@@ -1,0 +1,37 @@
+<%- include('../partials/header.ejs')%>
+<main>
+    <Section class="new_event">
+        <h2>Welcome,  <%= profile.firstName + " " + profile.lastName%></h2>
+        <%if (events.length) { %>
+            <section class="category">
+                <h2> You have created the following Events </h2>
+            </section>
+            
+            <table class="profile-event-table">
+                <tr>
+                    <th class="left-colum" >Event Name </th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+                <% events.forEach(event => { %>
+                <tr>
+                    <td class="left-colum">
+                        <h3><a class="event-link" href="/connections/<%= event._id %>"><%= event.title %></a></h3>
+                    </td>
+                    <td><%= event.category %></td>
+                    <td> 
+                        <form>
+                        <button type="submit" formmethod="POST" formaction="/connections/<%= event._id%>?_method=DELETE">Delete</button>
+                        <button type="submit" formmethod="GET" formaction="/connections/<%= event._id%>/edit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </table>
+
+              <% }else{ %>
+            <p> You have not created any events. </p>
+            <% } %>
+    </Section>
+</main>
+    <%- include('../partials/footer.ejs')%>

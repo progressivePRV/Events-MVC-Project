@@ -11,8 +11,7 @@ const connectionSchema =  new Schema({
         required: [true, "category is required"]
     },
     hostName: {
-        type: String,
-        required: [true, "hostName is required"]
+        type: Schema.Types.ObjectId, ref: 'User'
     },
     details : {
         type: String,

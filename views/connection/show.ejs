@@ -6,10 +6,14 @@
         <%= %>
        <section class="event">
            <div class="event-menu-container">
-               <form>
-                    <button type="submit" formmethod="POST" formaction="/connections/<%= output._id%>?_method=DELETE">Delete</button>
-                    <button type="submit" formmethod="GET" formaction="/connections/<%= output._id%>/edit">Update</button>
-            </form>
+            <% if(userInfo) { %>
+               <% if(userInfo['id']==output.hostName._id){ %>
+                    <form>
+                        <button type="submit" formmethod="POST" formaction="/connections/<%= output._id%>?_method=DELETE">Delete</button>
+                        <button type="submit" formmethod="GET" formaction="/connections/<%= output._id%>/edit">Update</button>
+                    </form>
+                    <% } %>
+                <% } %>
            </div>
            <h2 class="event-title">
                 <%= output.title%>
@@ -20,9 +24,9 @@
                 </div>
                 <div class="event-info-right">
                     <p class="event-info-basics">
-                        Hosted by: <em><%= output.hostName%></em><br>
+                        Hosted by: <em><%= output.hostName.firstName + " " + output.hostName.lastName %></em><br>
                         Category: <em><%= output.category%></em><br>
-                        <%= output.startTime%> to <%= output.endTime%> <br>
+                        <%= output.startTime%> to <%= output.endTime%> (24 hour format)<br>
                         on <%= output.date%> <br>
                         <%= output.location%>
                     </p>
