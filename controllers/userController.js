@@ -1,5 +1,6 @@
 const Connection = require('../models/connection');
 const User = require('../models/user');
+const model_rsvp = require("../models/rsvp");
 
 //get signup page
 exports.signupPage = (req,res,next)=>{
@@ -9,7 +10,9 @@ exports.signupPage = (req,res,next)=>{
 //post signup request
 exports.signup = (req,res,next)=>{
     let user =  new User(req.body);
-    // console.log("user from sign up page=>\n",user);
+    if(user.email){
+        user.email = user.email.toLowerCase();
+    }
     user.save()
     .then( ()=>{
         req.flash("success", "New account created, login in please");
@@ -36,6 +39,9 @@ exports.loginPage = (req,res,next)=>{
 //post login request
 exports.login = (req,res,next)=>{
     let email = req.body.email;
+    if(email){
+        email = email.toLowerCase();
+    }
     let password =  req.body.password;
     // get the user that matches email
     User.findOne({email:email})
@@ -73,10 +79,11 @@ exports.login = (req,res,next)=>{
 //get profile
 exports.profilePage = (req,res,next)=>{
     let id = req.session.userInfo['id'];
-    Promise.all([User.findById(id), Connection.find({hostName:id})])
+    Promise.all([User.findById(id), Connection.find({hostName:id}), model_rsvp.find({user:id},{event:1,commitment:1}).populate('event','title category')])
     .then(result=>{
-        const [profile,events] = result;
-        res.render("./user/profile", {profile,events});
+        const [profile,events,rsvp_events] = result;
+        console.log("rsvp events=>",rsvp_events);
+        res.render("./user/profile", {profile,events,rsvp_events});
     })
     .catch(err => next(err));
     // res.render("./user/profile");
@@ -88,6 +95,7 @@ exports.dologout = (req,res,next)=>{
         if(err){
             return next(err);
         }else{
+            // req.flash('success','log-out successdully ');
             res.redirect('/users/login');
         }
     });

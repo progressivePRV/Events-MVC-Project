@@ -47,3 +47,28 @@ exports.isAuthor = (req,res,next)=>{
     })
     .catch(err => next(err));
 };
+
+exports.isNotAuthor = (req,res,next)=>{
+    console.log("isNotAuthor called");
+    let id = req.params.id;
+    // getting the event
+    connection.findById(id)
+    .then(event =>{
+        // if event is present
+        if (event){
+            // if author of event and logged in user is same
+            if(event.hostName == req.session.userInfo['id']){
+                let err = new Error('Unauthorized action');
+                err.status = 401;
+                return next(err); 
+            }else{
+                 next();
+            }
+        }else{
+            let err = new Error('cannot find event with id '+id);
+            err.status = 404
+            next(err);
+        }
+    })
+    .catch(err => next(err));
+};

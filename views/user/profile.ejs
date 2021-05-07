@@ -1,6 +1,6 @@
 <%- include('../partials/header.ejs')%>
 <main>
-    <Section class="new_event">
+    <Section class="">
         <h2>Welcome,  <%= profile.firstName + " " + profile.lastName%></h2>
         <%if (events.length) { %>
             <section class="category">
@@ -9,20 +9,20 @@
             
             <table class="profile-event-table">
                 <tr>
-                    <th class="left-colum" >Event Name </th>
-                    <th>Category</th>
-                    <th>Actions</th>
+                    <th class="table-left-colum" ><h3>Event Name</h3></th>
+                    <th><h3>Category</h3></th>
+                    <th><h3>Actions</h3></th>
                 </tr>
                 <% events.forEach(event => { %>
                 <tr>
-                    <td class="left-colum">
+                    <td class="table-left-colum">
                         <h3><a class="event-link" href="/connections/<%= event._id %>"><%= event.title %></a></h3>
                     </td>
                     <td><%= event.category %></td>
                     <td> 
                         <form>
-                        <button type="submit" formmethod="POST" formaction="/connections/<%= event._id%>?_method=DELETE">Delete</button>
-                        <button type="submit" formmethod="GET" formaction="/connections/<%= event._id%>/edit">Update</button>
+                        <button class="rsvp-btn-no" type="submit" formmethod="POST" formaction="/connections/<%= event._id%>?_method=DELETE">Delete</button>
+                        <button class="rsvp-btn-maybe" type="submit" formmethod="GET" formaction="/connections/<%= event._id%>/edit">Update</button>
                         </form>
                     </td>
                 </tr>
@@ -33,5 +33,37 @@
             <p> You have not created any events. </p>
             <% } %>
     </Section>
+    <section class="rsvp-ed-events">
+       <% if(rsvp_events.length){ %>
+        <section class="category">
+            <h2> You have given RSVP response to following Events. </h2>
+        </section>
+            <table>
+                <tr>
+                    <th class="table-left-colum" ><h3>Events</h3></th>
+                    <th><h3>Category</h3></th>
+                    <th><h3>Going</h3></th>
+                    <th><h3>Actions</h3></th>
+                </tr>
+               <% rsvp_events.forEach(event=>{ %>
+                    <tr>
+                        <td class="table-left-colum"> <h3><%= event.event.title %></h3></td>
+                        <td><%= event.event.category %></td>
+                        <td><%= event.commitment %></td>
+                        <td>
+                            <form action="">
+                                <button type="submit" class="rsvp-btn-maybe" formmethod="GET" formaction="/connections/<%= event.event._id %>">Update</button>
+                                <button id="rsvp-btn-maybe" class="rsvp-btn-no" type="submit" formmethod="POST" formaction="/connections/<%= event.event._id %>/rsvp?_method=DELETE">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+               <% }); %>
+            </table>
+        <% }else{ %>
+            <p> You have no RSVP to any events. </p>
+        <% } %>
+
+    </section>
+
 </main>
     <%- include('../partials/footer.ejs')%>

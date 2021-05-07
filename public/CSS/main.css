@@ -11,6 +11,11 @@ a:hover{
     color:#98ded9;
 }
 
+#alt_txt{
+    visibility: hidden;
+    position: fixed;
+}
+
 
 /* // b */
 body{
@@ -185,15 +190,33 @@ main{
     line-height: 25px;
 }
 
-/* // p  .profile-event-table,*/
-td, th {
-    padding: 5px;
-    width: 20vh;
-    text-align: center;
+/* // p  */
+
+
+
+
+/* // R */
+.rsvp-btn:hover{
+    color: #000;
+}
+.rsvp-btn-yes{
+    background-color: #98DE65;
 }
 
-.profile-event-table, .left-colum {
-    text-align: left;
+.rsvp-btn-no{
+    background-color: #d33;
+}
+
+.rsvp-btn-maybe{
+    background-color: cadetblue;
+}
+#rsvp-count{
+    font-family: 'Ubuntu', sans-serif;;
+    color: #549994;
+}
+
+.rsvp-ed-events{
+    margin-top: 100px;
 }
 
 
@@ -209,8 +232,9 @@ td, th {
     visibility: hidden;
     position: fixed;
     left: 50%;
-    top: 10%;
+    top: 20%;
     padding: 16px; 
+    z-index: 2;
     text-align: center;
     transform: translate(-50%,-50%);
     /* height: 4rem; */
@@ -228,6 +252,7 @@ td, th {
     border-color: #d33;
 }
 .snackbar-message-success{
+    margin: 10px;
     color: #98DE8F;
     border-color: #98DE8F;
 }
@@ -245,14 +270,14 @@ td, th {
         opacity: 0;
     }
     to{
-        top: 10%;
+        top: 20%;
         opacity: 1;
     }
 }
 
 @keyframes fadeout {
     from{
-        top: 10%;
+        top: 20%;
         opacity: 1;
     }
     to{
@@ -274,6 +299,23 @@ td, th {
 /* // t */
 textarea{
     resize: none;
+}
+.table-left-colum {
+    text-align: left;
+}
+td, th {
+    padding: 5px;
+    width: 20vh;
+    text-align: center;
+}
+table, td, th {
+    border: 1px solid black;
+}
+table{
+    width: 80%;
+}
+th{
+    color:#5275EF;
 }
 
 /* // u */

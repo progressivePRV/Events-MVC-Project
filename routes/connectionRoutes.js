@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/connectionController');
-const {isLoggedIn, isAuthor} = require('../middlewares/auth');
-const {validateId} = require('../middlewares/validator');
+const {isLoggedIn, isAuthor, isNotAuthor} = require('../middlewares/auth');
+const {validateId ,validateResult, validateEvent} = require('../middlewares/validator');
 
 //GET /connections: send all the connection
 router.get("/",controller.showAll);
@@ -11,7 +11,7 @@ router.get("/",controller.showAll);
 router.get("/new", isLoggedIn, controller.new);
 
 //POST /connections create new connection
-router.post("/", isLoggedIn, controller.createConnection);
+router.post("/", isLoggedIn, validateEvent, validateResult, controller.createConnection);
 
 //GET /connections/:id send specific connection
 router.get("/:id", validateId, controller.findById);
@@ -20,10 +20,15 @@ router.get("/:id", validateId, controller.findById);
 router.get("/:id/edit", isLoggedIn, validateId, isAuthor, controller.editById);
 
 //POST /connections/:id edit the specific connection
-router.put("/:id", isLoggedIn, validateId, isAuthor, controller.updateById);
+router.put("/:id", isLoggedIn, validateId, isAuthor, validateEvent, validateResult, controller.updateById);
 
 //DELETE /connections/:id delete the specific connection and show all connection.
 router.delete("/:id", isLoggedIn, validateId, isAuthor, controller.deleteById);
+
+// create new RSVP
+router.post("/:id/rsvp/", isLoggedIn, validateId, isNotAuthor, controller.doRSVP);
+
+router.delete("/:id/rsvp",isLoggedIn, validateId, controller.deleteRSVP);
 
 
 module.exports = router;

@@ -1,5 +1,6 @@
 // const { findByIdAndDelete } = require('../models/connection');
 const model = require('../models/connection');
+const model_rsvp = require('../models/rsvp');
 
 //GET /connections: send all the connection
 exports.showAll = (req,res,next)=>{
@@ -57,11 +58,14 @@ exports.findById = (req,res,next)=>{
     //     return next(err);
     // }
 
-    model.findById(id).populate('hostName', 'firstName lastName')
-    .then(event => {
+    Promise.all([model.findById(id).populate('hostName', 'firstName lastName'),model_rsvp.find({event:id,commitment:'yes'}).countDocuments()])
+    .then(result => {
+        const [event, rsvps] = result;
         if(event){
-            // console.log('show event=>',event);
-            res.render('./connection/show',{output:event});
+            let output = event.toObject();
+            output.rsvps = rsvps;
+            console.log("output =>",output);
+            res.render('./connection/show',{output});
         }else{
             let err = new Error('cannot find event with id '+id);
             err.status = 404
@@ -130,8 +134,9 @@ exports.deleteById = (req,res,next)=>{
     //     return next(err);
     // }
 
-    model.findByIdAndDelete(id)
-    .then(event =>{
+    Promise.all([model.findByIdAndDelete(id), model_rsvp.deleteMany({event:id})]) 
+    .then(result =>{
+        const [event,dels] = result;
         if(event){
             req.flash('success','event Deleted!');
             res.redirect('/connections');
@@ -142,4 +147,85 @@ exports.deleteById = (req,res,next)=>{
         }
     })
     .catch(err => console.log(err));
+};
+
+exports.doRSVP = (req,res,next)=>{
+    let id = req.params.id;
+    let commitment = req.query.commitment;
+    if(commitment){
+        commitment = commitment.toLowerCase();
+    }
+    let userId = req.session.userInfo['id'];
+    let g_rsvp = {};
+    g_rsvp['user'] = userId;
+    g_rsvp['event'] = id;
+    g_rsvp['commitment'] = commitment;
+    console.log("rsvp=>",g_rsvp);
+    // check if user has already RSVPed to event or not
+    model_rsvp.findOne({event:id,user:userId})
+    .then(rsvp => {
+        if(rsvp){ 
+            console.log("rsvp exists");
+            if(rsvp.commitment===commitment){
+                console.log("commitment is same no change");
+                // replace current rsvp
+                req.flash('success','Same RSVP responses is already present!'); 
+                res.redirect('/users/profile');
+            }else{
+                console.log("update rsvp as commitment is changed");
+                //"replace the rsvp row"
+                // let row = new model_rsvp(g_rsvp);
+                model_rsvp.updateOne({event:id},{$set: {commitment:commitment}},{runValidators:true})
+                .then( rsvp =>{
+                    req.flash('success','RSVP change succesful!');
+                    res.redirect('/users/profile');
+                })
+                .catch(err =>{
+                    if(err.name === 'ValidationError'){
+                        err.status = 400;
+                        req.flash('error',err.message);
+                        // next(err);
+                        res.redirect('back');
+                    }else{
+                        next(err);
+                    }
+                });
+            }
+        }else{
+            console.log("rsvp does not exist, create new one");
+            // save whole new row(rsvp to event)
+            let row = new model_rsvp(g_rsvp);
+            console.log("going to creat new RSVP");
+            row.save()
+            .then( rsvp =>{
+                console.log("new RSVP created");
+                req.flash('success','RSVP succesful!');
+                res.redirect('/users/profile');
+            })
+            .catch(err =>{
+                console.log("err creating new RSVP");
+                if(err.name === 'ValidationError'){
+                    err.status = 400;
+                    req.flash('error',err.message);
+                    // next(err);
+                    res.redirect('back');
+                }else{
+                    next(err);
+                }
+            });
+        }    
+    })
+    .catch(err =>{
+        next(err);
+    });
+}
+
+exports.deleteRSVP = (req,res,next)=>{
+    let id = req.params.id;
+    let userId = req.session.userInfo['id'];
+    model_rsvp.deleteOne({event:id, user:userId})
+    .then(result =>{
+        res.redirect('back');
+    })
+    .catch(err => next(err));
 };

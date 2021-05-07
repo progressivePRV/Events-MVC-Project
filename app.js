@@ -37,6 +37,11 @@ app.use(express.static('public')); // for serving static conetent from Public di
 app.use(express.urlencoded({extended:true})); // for accessing POST form body parameter
 app.use(morgan('tiny')); // using logging module with tiny details
 app.use(methodOverride('_method')); // using  method override for overiding POST http methods with other methods.
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store')
+    next()
+  }); // stoping cache
+
 
 // adding session mechanisam to server
 // create session id with secret key to store in cookie
@@ -51,10 +56,10 @@ app.use(
     })
 );
 app.use(flash()); // using flash as in memory storage for messages
+
 app.use((req, res, next)=>{
     res.locals.userInfo = req.session.userInfo || null; // storing user's information from session to response
-    // res.locals.user = req.session.name || null;
-    res.locals.errorMessages = req.flash('error'); // storing error messages in response
+    res.locals.errorMessages = req.flash('error'); // getting error messages in response
     res.locals.successMessages = req.flash('success');// storing success messages in response
     next();
 });

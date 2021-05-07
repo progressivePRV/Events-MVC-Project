@@ -4,42 +4,44 @@ const Schema = mongoose.Schema;
 const connectionSchema =  new Schema({
     title : {
         type: String, 
-        required : [true , 'title is required']
+        required : [true , 'Title is required'],
+        minLength: [3, 'Title should have at least 3 charcters']
     },
     category: {
         type: String,
-        required: [true, "category is required"]
+        required: [true, "Category is required"],
+        minLength: [3, 'Category should have at least 3 charcters']
     },
     hostName: {
         type: Schema.Types.ObjectId, ref: 'User'
     },
     details : {
         type: String,
-        required: [true, 'details  is required'],
-        minLength: [10, 'the details should have at least 10 charcters']
+        required: [true, 'Details is required'],
+        minLength: [10, 'The details should have at least 10 charcters']
     },
     date : {
         type: String,
-        required: [true, 'date  is required'],
+        required: [true, 'Date is required and should have "yyyy-mm-dd" format'],
         match: [/\d{4}-\d{2}-\d{2}/]
     },
     startTime : {
         type: String,
-        required: [true, 'startTime  is required'],
+        required: [true, 'StartTime is required and should have "hh:mm" format'],
         match: [/\d{2}:\d{2}/]
     },
     endTime : {
         type: String,
-        required: [true, 'endTime  is required'],
+        required: [true, 'EndTime is required and should have "hh:mm" format'],
         match: [/\d{2}:\d{2}/]
     },
     image : {
         type: String,
-        required: [true, 'image  is required'],
+        required: [true, 'Image is required'],
     },
     location : {
         type: String,
-        required: [true, 'location  is required'],
+        required: [true, 'Location is required'],
     },
 },
 {timestamps:true}

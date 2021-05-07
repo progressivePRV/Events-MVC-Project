@@ -18,12 +18,13 @@
 
     <!-- notifications --> 
     <div id="snackbar">
-        <% if(errorMessages.length>0){
-            errorMessages.forEach(message => { %>
-                <div class="snackbar-message-error"> <%= message %>  </div> 
-                <% });%>
-            <% } %>
+        <% if(errorMessages.length>0){ %>
+            <% errorMessages.forEach(message =>{ %>
+                <div class="snackbar-message-error"> - <%= message %>  </div>
+            <% }) %>
+        <% } %>
     
+
             <%if(successMessages.length>0){ 
             successMessages.forEach(message => { %>
                 <div class="snackbar-message-success"> <%= message %> </div> 

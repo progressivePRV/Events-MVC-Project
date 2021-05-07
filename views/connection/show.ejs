@@ -6,13 +6,23 @@
         <%= %>
        <section class="event">
            <div class="event-menu-container">
-            <% if(userInfo) { %>
-               <% if(userInfo['id']==output.hostName._id){ %>
+            <% if(output.rsvps>0){ %>
+                <h3>Count of RSVP 'yes' : <span id="rsvp-count"><%= output.rsvps %></span></h3>
+            <% }else{%>
+                <h3>No one has done RSVP 'yes' to the event</h3><br>
+            <%} %>
+            <% if(userInfo && userInfo['id']==output.hostName._id) { %>
                     <form>
-                        <button type="submit" formmethod="POST" formaction="/connections/<%= output._id%>?_method=DELETE">Delete</button>
-                        <button type="submit" formmethod="GET" formaction="/connections/<%= output._id%>/edit">Update</button>
+                        <button class="rsvp-btn-no" type="submit" formmethod="POST" formaction="/connections/<%= output._id%>?_method=DELETE">Delete</button>
+                        <button class="rsvp-btn-maybe" type="submit" formmethod="GET" formaction="/connections/<%= output._id%>/edit">Update</button>
                     </form>
-                    <% } %>
+                <% } else {%>
+                    <h3>RSVP to attend!</h3>
+                    <form action="">
+                        <button class="rsvp-btn-yes" class="rsvp-btn" type="submit" formmethod="POST" formaction="/connections/<%= output._id%>/rsvp?commitment=yes">Yes</button>
+                        <button class="rsvp-btn-maybe" class="rsvp-btn" type="submit" formmethod="POST" formaction="/connections/<%= output._id%>/rsvp?commitment=maybe">Maybe</button>
+                        <button class="rsvp-btn-no" class="rsvp-btn" type="submit" formmethod="POST" formaction="/connections/<%= output._id%>/rsvp?commitment=no">No</button>
+                    </form>
                 <% } %>
            </div>
            <h2 class="event-title">
